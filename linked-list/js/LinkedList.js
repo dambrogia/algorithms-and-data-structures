@@ -57,6 +57,7 @@ class LinkedList {
         while (node !== null) {
             if (node.data === data && node.next === null) {
                 this.removeTail();
+                break;
             } else if (node.data === data && node.next !== null) {
                 lastNode.next = node.next;
                 this.size--;
