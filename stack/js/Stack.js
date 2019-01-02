@@ -43,10 +43,7 @@ class Stack {
      * @return {string}
      */
     toString() {
-        var str = '';
-        this.stack.forEach(val => str += `${val} `);
-        // Remove the last empty space
-        return str.substr(0, str.length - 1);
+        return this.stack.join(' ');
     }
 }
 
