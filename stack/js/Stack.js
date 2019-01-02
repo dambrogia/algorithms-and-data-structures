@@ -11,7 +11,6 @@ class Stack {
         return this.stack.length;
     }
 
-
     /**
      * Push data to the end of the stack.
      * @param {mixed} data
