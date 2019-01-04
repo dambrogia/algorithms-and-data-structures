@@ -17,6 +17,7 @@ class LinkedList {
         } else {
             const oldHead = this.head;
             var newHead = new Node(data);
+            oldHead.prev = newHead;
             newHead.next = oldHead;
             this.head = newHead;
         }
@@ -24,6 +25,32 @@ class LinkedList {
         this.size++;
 
         return this;
+    }
+
+    /**
+     * Remove the last item in the list and return it's data.
+     * @return {mixed} data
+     */
+    removeHead() {
+        const originalHead = this.head;
+
+        // One node
+        if (this.head !== null && this.head.next === null) {
+            this.head = null;
+        // Two nodes
+        } else if (this.head !== null && this.head.next.isTail()) {
+            this.head = originalHead.next;
+            this.tail = null;
+            this.head.prev = null;
+        // Three nodes or more
+        } else if (this.head !== null && ! this.head.next.isTail()) {
+            this.head = originalHead.next;
+            this.head.prev = null;
+        }
+
+        this.size > 0 && this.size--;
+
+        return originalHead === null ? null : originalHead.data;
     }
 
     /**
@@ -38,11 +65,36 @@ class LinkedList {
             const tail = new Node(data);
             var node = this.head;
             while (! node.isTail()) node = node.next;
+            tail.prev = node;
             node.next = tail;
+            this.tail = tail;
             this.size++;
         }
 
         return this;
+    }
+
+    /**
+     * Remove the last item in the list and return it's data.
+     * @return {mixed} data
+     */
+    removeTail() {
+        const originalTail = this.tail;
+
+        // Two nodes
+        if (this.tail !== null && this.tail.prev.isHead()) {
+            this.tail = null;
+            this.head.next = null;
+            this.size--;
+        // Three nodes or more
+        } else if (this.tail !== null && ! this.tail.prev.isHead()) {
+            this.tail = this.tail.prev;
+            this.tail.next = null;
+            this.size--;
+        }
+
+        // One node
+        return originalTail === null ? this.removeHead() : originalTail.data;
     }
 
     /**
@@ -52,51 +104,23 @@ class LinkedList {
      */
     removeNode(data) {
         var node = this.head;
-        var lastNode = null;
+        var prevNode = null;
+        var nextNode = null;
 
         while (node !== null) {
-            if (node.data === data && node.next === null) {
+            if (node.data === data && node.isTail()) {
                 this.removeTail();
                 break;
-            } else if (node.data === data && node.next !== null) {
-                lastNode.next = node.next;
+            } else if (node.data === data && ! node.isTail()) {
+                prevNode.next = nextNode;
+                nextNode.prev = prevNode;
                 this.size--;
                 break;
             }
 
-            lastNode = node;
+            prevNode = node;
             node = node.next;
-        }
-
-        return this;
-    }
-
-    /**
-     * Remove the last node in the list
-     * @return {self}
-     */
-    removeTail() {
-        var node = this.head;
-
-        if (node.isTail()) {
-            this.head = null;
-        } else {
-            while (! node.next.isTail()) node = node.next;
-            node.next = null;
-            this.size--;
-        }
-
-        return this;
-    }
-
-    /**
-     * Remove the first node in the list
-     * @return {self}
-     */
-    removeHead() {
-        if (this.head !== null) {
-            this.head = this.head.isTail() ? null : this.head.next;
-            this.size--;
+            nextNode = node.next;
         }
 
         return this;

@@ -2,6 +2,7 @@ class Node {
     constructor(data) {
         this.data = data;
         this.next = null;
+        this.prev = null;
     }
 
     /**
@@ -13,11 +14,11 @@ class Node {
     }
 
     /**
-     * Set the node that comes after this one within the list.
-     * @param {Node} node
+     * Assert this is the head node.
+     * @return {boolean}
      */
-    setNext(node) {
-        this.next = node;
+    isHead() {
+        return this.prev === null;
     }
 }
 
