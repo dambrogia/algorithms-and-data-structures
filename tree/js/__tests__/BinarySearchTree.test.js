@@ -28,7 +28,7 @@ const createTree = () => {
 describe('Test Tree', () => {
     test('insert method', () => {
         var tree = createTree();
-        var csv = tree.toCsv();
+        var csv = tree.inOrder();
         var expected = treeData().sort().join(',');
         expect(csv).toBe(expected);
 
@@ -49,7 +49,7 @@ describe('Test Tree', () => {
         var treeDataArr = treeData();
         treeDataArr.sort();
 
-        expect(tree.toCsv()).toBe(treeDataArr.join(','));
+        expect(tree.inOrder()).toBe(treeDataArr.join(','));
     });
 
     test('exists method', () => {
@@ -76,7 +76,7 @@ describe('Test Tree', () => {
     test('truncate method', () => {
         var tree = createTree();
         tree.truncate();
-        expect(tree.toCsv()).toBe('');
+        expect(tree.inOrder()).toBe('');
     });
 
     test('getNodeByValue method', () => {
@@ -84,6 +84,7 @@ describe('Test Tree', () => {
         expect(tree.getNodeByValue(40).getLeft()).toBe(null);
         expect(tree.getNodeByValue(55).getLeft().getData()).toBe(52);
         expect(tree.getNodeByValue(55).getRight().getData()).toBe(57);
+        expect(tree.getNodeByValue(500)).toBe(null);
     });
 
     test('remove method', () => {
@@ -110,5 +111,23 @@ describe('Test Tree', () => {
         expect(tree.getNodeByValue(51).getRight().getData()).toBe(55);
         expect(tree.getNodeByValue(51).getRight().getLeft().getData()).toBe(52);
         expect(tree.getNodeByValue(51).getLeft().getData()).toBe(45);
+    });
+
+    test('inOrder method', () => {
+        var tree = createTree();
+        var csv = tree.inOrder();
+        expect(csv).toBe('40,45,47,48,50,51,52,55,57,60,61')
+    });
+
+    test('preOrder method', () => {
+        var tree = createTree();
+        var csv = tree.preOrder();
+        expect(csv).toBe('50,45,40,47,48,55,52,51,57,60,61');
+    });
+
+    test('postOrder method', () => {
+        var tree = createTree();
+        var csv = tree.postOrder();
+        expect(csv).toBe('40,48,47,45,51,52,61,60,57,55,50');
     });
 });
