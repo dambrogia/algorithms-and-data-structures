@@ -98,10 +98,6 @@ class BinarySearchTree {
      * @returns {BinarySearchTreeNode | null}
      */
     getNodeByValue(n) {
-        if (!this.exists(n)) {
-            return null;
-        }
-
         /**
          * Private function to traverse tree recursively.
          * @param {BinarySearchTreeNode} node
@@ -186,12 +182,13 @@ class BinarySearchTree {
 
     /**
      * Get items in "in order" fashion - left, root, right
-     * @returns {Array}
+     * @returns {String}
      */
      inOrder() {
         /**
          * Private function to traverse tree recursively.
          * @param {BinarySearchTreeNode} node
+         * @returns {Array}
          */
         const _traverse = node => {
             if (node === null) {
@@ -209,12 +206,13 @@ class BinarySearchTree {
 
     /**
      * Get items in "pre order" fashion - root, left, right
-     * @returns {Array}
+     * @returns {String}
      */
     preOrder() {
         /**
          * Private function to traverse tree recursively.
          * @param {BinarySearchTreeNode} node
+         * @returns {Array}
          */
         const _traverse = node => {
             if (node === null) {
@@ -232,12 +230,13 @@ class BinarySearchTree {
 
     /**
      * Get items in "post order" fashion - left, right, root
-     * @returns {Array}
+     * @returns {String}
      */
     postOrder() {
         /**
          * Private function to traverse tree recursively.
          * @param {BinarySearchTreeNode} node
+         * @returns {Array}
          */
         const _traverse = node => {
             if (node === null) {
@@ -253,4 +252,5 @@ class BinarySearchTree {
         return _traverse(this.root).join(',');
     };
 }
+
 module.exports = BinarySearchTree;

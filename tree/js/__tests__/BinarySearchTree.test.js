@@ -28,7 +28,7 @@ const createTree = () => {
 describe('Test Tree', () => {
     test('insert method', () => {
         var tree = createTree();
-        var csv = tree.toCsv();
+        var csv = tree.inOrder();
         var expected = treeData().sort().join(',');
         expect(csv).toBe(expected);
 
@@ -49,7 +49,7 @@ describe('Test Tree', () => {
         var treeDataArr = treeData();
         treeDataArr.sort();
 
-        expect(tree.toCsv()).toBe(treeDataArr.join(','));
+        expect(tree.inOrder()).toBe(treeDataArr.join(','));
     });
 
     test('exists method', () => {
@@ -76,7 +76,7 @@ describe('Test Tree', () => {
     test('truncate method', () => {
         var tree = createTree();
         tree.truncate();
-        expect(tree.toCsv()).toBe('');
+        expect(tree.inOrder()).toBe('');
     });
 
     test('getNodeByValue method', () => {
@@ -84,6 +84,7 @@ describe('Test Tree', () => {
         expect(tree.getNodeByValue(40).getLeft()).toBe(null);
         expect(tree.getNodeByValue(55).getLeft().getData()).toBe(52);
         expect(tree.getNodeByValue(55).getRight().getData()).toBe(57);
+        expect(tree.getNodeByValue(500)).toBe(null);
     });
 
     test('remove method', () => {
