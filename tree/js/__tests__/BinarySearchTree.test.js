@@ -111,4 +111,22 @@ describe('Test Tree', () => {
         expect(tree.getNodeByValue(51).getRight().getLeft().getData()).toBe(52);
         expect(tree.getNodeByValue(51).getLeft().getData()).toBe(45);
     });
+
+    test('inOrder method', () => {
+        var tree = createTree();
+        var csv = tree.inOrder();
+        expect(csv).toBe('40,45,47,48,50,51,52,55,57,60,61')
+    });
+
+    test('preOrder method', () => {
+        var tree = createTree();
+        var csv = tree.preOrder();
+        expect(csv).toBe('50,45,40,47,48,55,52,51,57,60,61');
+    });
+
+    test('postOrder method', () => {
+        var tree = createTree();
+        var csv = tree.postOrder();
+        expect(csv).toBe('40,48,47,45,51,52,61,60,57,55,50');
+    });
 });

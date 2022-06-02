@@ -38,32 +38,6 @@ class BinarySearchTree {
         this.root = _traverse(this.root);
     }
 
-    /**
-     * Traverse the tree left to right to get a csv.
-     * @returns {string}
-     */
-    toCsv() {
-        var data = [];
-
-        /**
-         * @param {BinarySearchTreeNode} node
-         * @returns {Array}
-         */
-        const _traverse = (node) => {
-            if (node === null) {
-                return [];
-            }
-
-            const left = node.getLeft() === null ? [] : _traverse(node.getLeft());
-            const mid = [ node.getData() ];
-            const right = node.getRight() === null ? [] : _traverse(node.getRight());
-
-            return left.concat(mid).concat(right);
-        };
-
-        return _traverse(this.root).join(',');
-    }
-
     depth() {
         /**
          * @param {BinarySearchTreeNode} node
@@ -209,5 +183,74 @@ class BinarySearchTree {
 
         return false;
     }
+
+    /**
+     * Get items in "in order" fashion - left, root, right
+     * @returns {Array}
+     */
+     inOrder() {
+        /**
+         * Private function to traverse tree recursively.
+         * @param {BinarySearchTreeNode} node
+         */
+        const _traverse = node => {
+            if (node === null) {
+                return [];
+            }
+
+            const left = _traverse(node.getLeft());
+            const root = [ node.getData() ];
+            const right = _traverse(node.getRight());
+            return left.concat(root, right);
+        }
+
+        return _traverse(this.root).join(',')
+    }
+
+    /**
+     * Get items in "pre order" fashion - root, left, right
+     * @returns {Array}
+     */
+    preOrder() {
+        /**
+         * Private function to traverse tree recursively.
+         * @param {BinarySearchTreeNode} node
+         */
+        const _traverse = node => {
+            if (node === null) {
+                return [];
+            }
+
+            const left = _traverse(node.getLeft());
+            const root = [ node.getData() ];
+            const right = _traverse(node.getRight());
+            return root.concat(left, right);
+        }
+
+        return _traverse(this.root).join(',')
+    }
+
+    /**
+     * Get items in "post order" fashion - left, right, root
+     * @returns {Array}
+     */
+    postOrder() {
+        /**
+         * Private function to traverse tree recursively.
+         * @param {BinarySearchTreeNode} node
+         */
+        const _traverse = node => {
+            if (node === null) {
+                return [];
+            }
+
+            const left = _traverse(node.getLeft());
+            const root = [ node.getData() ];
+            const right = _traverse(node.getRight());
+            return left.concat(right, root);
+        }
+
+        return _traverse(this.root).join(',');
+    };
 }
 module.exports = BinarySearchTree;
